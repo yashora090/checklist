@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@layout/customlistviewhover" 
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
     
     <CheckBox
         android:id="@+id/checkBox1"

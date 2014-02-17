@@ -53,11 +53,14 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				
+				if(!t.getText().toString().equals("")){
 				db.addData(new getsetinfo(t.getText().toString(),false));
 				Intent intent = getIntent();
 			    finish();
 			    startActivity(intent);
 				
+				}
 			}
 		});
 		
@@ -71,6 +74,8 @@ public class MainActivity extends Activity {
 
 	private void displayListView() {
 		final ArrayList<getsetinfo> stateList;// = new ArrayList<getsetinfo>();
+		
+		
 		stateList=db.getAllContacts();
 		
 

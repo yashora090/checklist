@@ -3,18 +3,22 @@ package com.ykapps.chkbox;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -50,6 +54,9 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				db.addData(new getsetinfo(t.getText().toString(),false));
+				Intent intent = getIntent();
+			    finish();
+			    startActivity(intent);
 				
 			}
 		});
@@ -74,8 +81,40 @@ public class MainActivity extends Activity {
 		ListView listView = (ListView) findViewById(R.id.listView1);
 		// Assign adapter to ListView
 		listView.setAdapter(dataAdapter);
+		
+listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, final View arg1,
+					final int position,long arg3) {
+				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+				// Vibrate for 500 milliseconds
+				v.vibrate(50);
+				// TODO Auto-generated method stub
+				AlertDialog.Builder b=new AlertDialog.Builder(MainActivity.this);
+				b.setIcon(android.R.drawable.ic_dialog_alert);
+				b.setMessage("Choose Delete or Edit");
+				b.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+					  public void onClick(DialogInterface dialog, int whichButton) {
+						  
+						 /* Toast.makeText(getApplicationContext(),
+                                  "Deleted", Toast.LENGTH_LONG)
+                                  .show();*/
+						  TextView dbid = (TextView) arg1.findViewById(R.id.code);
+						  db.deleteRow(Integer.parseInt(dbid.getText().toString()));
+						  //ma.notifyDataSetChanged();
+						  Intent intent = getIntent();
+						    finish();
+						    startActivity(intent);
+					  }
+					});
+				   b.show();
+					return false;
+				}
+			});
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
+			
 
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -131,12 +170,7 @@ public class MainActivity extends Activity {
 						CheckBox cb = (CheckBox) v;
 						getsetinfo _state = (getsetinfo) cb.getTag();
 
-						/*Toast.makeText(
-								getApplicationContext(),
-								"Checkbox: " + cb.getText() + " -> "
-										+ cb.isChecked(), Toast.LENGTH_LONG)
-								.show();*/
-						//db.updateContact(stateList.get(position).getID(),);
+						
 					
 					if(cb.isChecked()){
 						
@@ -169,28 +203,5 @@ public class MainActivity extends Activity {
 
 	}
 
-////#######################
-	/*public void onPause() {
-	    super.onPause();
-	    save(c.isChecked());
-	}
-	
-	@Override
-	public void onResume() {
-	    super.onResume();
-	    c.setChecked(load());
-	}
-	
-	private void save(final boolean isChecked) {
-	    SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-	    SharedPreferences.Editor editor = sharedPreferences.edit();
-	    editor.putBoolean("check", isChecked);
-	    editor.commit();
-	}
-	
-	private boolean load() { 
-	    SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-	    return sharedPreferences.getBoolean("check", false);
-	}*/
 
 }

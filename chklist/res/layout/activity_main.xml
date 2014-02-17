@@ -44,8 +44,8 @@
     <Button
         
         android:id="@+id/button1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="85dp"
+        android:layout_height="80dp"
         android:layout_alignBaseline="@+id/editText1"
         android:layout_alignBottom="@+id/editText1"
         android:layout_alignRight="@+id/listView1"

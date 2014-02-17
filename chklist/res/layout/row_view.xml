@@ -12,13 +12,14 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text=""
-        android:textColor="#B40404" />
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#cccccc" 
+        android:textColor="#ffffff" 
+        android:textSize="20sp"
         android:text="textview" />
 
 </LinearLayout>

@@ -70,10 +70,8 @@ public class MainActivity extends Activity {
 	}
 
 	private void displayListView() {
-		ArrayList<getsetinfo> stateList = new ArrayList<getsetinfo>();
+		final ArrayList<getsetinfo> stateList;// = new ArrayList<getsetinfo>();
 		stateList=db.getAllContacts();
-		//Toast.makeText(MainActivity.this, stateList.get(1).toString(), Toast.LENGTH_LONG).show();
-		// Array list of countries
 		
 
 		// create an ArrayAdaptar from the String Array
@@ -83,35 +81,42 @@ public class MainActivity extends Activity {
 		listView.setAdapter(dataAdapter);
 		
 listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-			
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, final View arg1,
-					final int position,long arg3) {
-				Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-				// Vibrate for 500 milliseconds
-				v.vibrate(50);
-				// TODO Auto-generated method stub
-				AlertDialog.Builder b=new AlertDialog.Builder(MainActivity.this);
-				b.setIcon(android.R.drawable.ic_dialog_alert);
-				b.setMessage("Choose Delete or Edit");
-				b.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-					  public void onClick(DialogInterface dialog, int whichButton) {
-						  
-						 /* Toast.makeText(getApplicationContext(),
-                                  "Deleted", Toast.LENGTH_LONG)
-                                  .show();*/
-						  TextView dbid = (TextView) arg1.findViewById(R.id.code);
-						  db.deleteRow(Integer.parseInt(dbid.getText().toString()));
-						  //ma.notifyDataSetChanged();
-						  Intent intent = getIntent();
-						    finish();
-						    startActivity(intent);
-					  }
-					});
-				   b.show();
-					return false;
-				}
-			});
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int position,
+			long arg3) {
+		// TODO Auto-generated method stub
+		Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		// Vibrate for 500 milliseconds
+		v.vibrate(50);
+		AlertDialog.Builder b=new AlertDialog.Builder(MainActivity.this);
+		//b.setIcon(android.R.drawable.ic_dialog_alert);
+		b.setMessage("Are you sure You want to delete");
+		
+		b.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+            	db.deleteRow(stateList.get(position).getID());
+      		  
+      		  Intent intent = getIntent();
+      		    finish();
+      		    startActivity(intent);
+      		Toast.makeText(getApplicationContext(),
+                    "Deleted", Toast.LENGTH_LONG)
+                    .show();
+         }
+        });
+
+b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked cancel button
+            }
+        });
+		b.show();
+		return false;
+	}
+	
+});
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			
@@ -123,6 +128,7 @@ listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 				/*Toast.makeText(getApplicationContext(),
 						"Clicked on : " + state.getName(), Toast.LENGTH_LONG)
 						.show();*/
+				
 			}
 		});
 	}
@@ -190,6 +196,8 @@ listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
+			
+			
 			getsetinfo state = stateList.get(position);
 			//holder.code.setText(stateList.get(position).getnote());
 			holder.code.setText(state.getnote());

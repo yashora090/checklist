@@ -25,6 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:textColor="#000000"
+        android:hint="Type Here"
+        android:background="@layout/edittextborder"
         android:layout_marginTop="17dp"
         android:ems="10" >
 

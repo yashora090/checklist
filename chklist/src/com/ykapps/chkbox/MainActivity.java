@@ -98,7 +98,7 @@ listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 		//b.setIcon(android.R.drawable.ic_dialog_alert);
 		b.setMessage("Are you sure You want to delete");
 		
-		b.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
             	db.deleteRow(stateList.get(position).getID());
@@ -112,7 +112,7 @@ listView.setOnItemLongClickListener(new OnItemLongClickListener() {
          }
         });
 
-b.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+b.setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked cancel button
             }
